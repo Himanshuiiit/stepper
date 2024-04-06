@@ -1,0 +1,287 @@
+{
+  "workflow": [
+    {
+      "code": "planning",
+      "name": "Planning",
+      "color": "#FF9C6E",
+      "actions": [
+        {
+          "code": "submit",
+          "name": "Submit",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "planning_completed",
+          "ignore_tasks": false,
+          "linked_approval": null,
+          "allowed_job_roles": ["permit_holder", "system_administrator"],
+          "create_new_revision": false
+        }
+      ],
+      "is_open_state": true,
+      "primary_action": "submit",
+      "primary_next_state": "planning_completed"
+    },
+    {
+      "code": "planning_completed",
+      "name": "Planning Completed",
+      "color": "#FA541C",
+      "actions": [
+        {
+          "code": "approve",
+          "name": "Approve",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "planning_approved",
+          "ignore_tasks": false,
+          "linked_approval": "approving_authority_approval",
+          "allowed_job_roles": ["permit_approver", "system_administrator"],
+          "create_new_revision": false
+        },
+        {
+          "code": "go_back_to_planning",
+          "name": "Go back to planning",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "planning",
+          "ignore_tasks": true,
+          "linked_approval": null,
+          "allowed_job_roles": ["permit_approver", "system_administrator"],
+          "create_new_revision": false
+        },
+        {
+          "code": "cancel",
+          "name": "Cancel",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "cancelled",
+          "ignore_tasks": true,
+          "linked_approval": "permit_cancellation",
+          "allowed_job_roles": [
+            "permit_issuer",
+            "permit_approver",
+            "system_administrator"
+          ],
+          "create_new_revision": false
+        }
+      ],
+      "is_open_state": true,
+      "primary_action": "approve",
+      "primary_next_state": "planning_approved"
+    },
+    {
+      "code": "planning_approved",
+      "name": "Planning Approved",
+      "color": "#AD2102",
+      "actions": [
+        {
+          "code": "issue",
+          "name": "Issue",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "issued",
+          "ignore_tasks": false,
+          "linked_approval": "issuer_approval",
+          "allowed_job_roles": ["permit_issuer", "system_administrator"],
+          "create_new_revision": false
+        },
+        {
+          "code": "cancel",
+          "name": "Cancel",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "cancelled",
+          "ignore_tasks": true,
+          "linked_approval": "permit_cancellation",
+          "allowed_job_roles": ["permit_issuer", "system_administrator"],
+          "create_new_revision": false
+        }
+      ],
+      "is_open_state": true,
+      "primary_action": "issue",
+      "primary_next_state": "issued"
+    },
+    {
+      "code": "issued",
+      "name": "Issued",
+      "color": "#40A9FF",
+      "actions": [
+        {
+          "code": "live",
+          "name": "Make Permit Live",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "live",
+          "ignore_tasks": false,
+          "linked_approval": "verifier_issuance",
+          "allowed_job_roles": ["permit_verifier", "system_administrator"],
+          "create_new_revision": false
+        },
+        {
+          "code": "cancel",
+          "name": "Cancel",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "cancelled",
+          "ignore_tasks": true,
+          "linked_approval": "permit_cancellation",
+          "allowed_job_roles": ["permit_verifier", "system_administrator"],
+          "create_new_revision": false
+        }
+      ],
+      "is_open_state": true,
+      "primary_action": "live",
+      "primary_next_state": "live"
+    },
+    {
+      "code": "live",
+      "name": "Live",
+      "color": "#0078D6",
+      "actions": [
+        {
+          "code": "surrender",
+          "name": "Surrender",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "surrendered",
+          "ignore_tasks": false,
+          "linked_approval": "permit_holder_return",
+          "allowed_job_roles": ["permit_holder", "system_administrator"],
+          "create_new_revision": false
+        },
+        {
+          "code": "mark_for_revalidation",
+          "name": "Mark for Re-validation",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "due_for_revalidation",
+          "ignore_tasks": true,
+          "linked_approval": null,
+          "allowed_job_roles": [
+            "permit_verifier",
+            "permit_issuer",
+            "system_administrator"
+          ],
+          "create_new_revision": false
+        },
+        {
+          "code": "mark_as_expired",
+          "name": "Mark as Expired",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "expired",
+          "ignore_tasks": true,
+          "linked_approval": null,
+          "allowed_job_roles": [
+            "permit_verifier",
+            "permit_issuer",
+            "system_administrator"
+          ],
+          "create_new_revision": false
+        }
+      ],
+      "is_open_state": true,
+      "primary_action": "surrender",
+      "primary_next_state": "surrendered"
+    },
+    {
+      "code": "due_for_revalidation",
+      "name": "Due Re-validation",
+      "color": "#FA8C16",
+      "actions": [
+        {
+          "code": "reissue",
+          "name": "Re-issue",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "planning_approved",
+          "ignore_tasks": false,
+          "linked_approval": null,
+          "allowed_job_roles": [
+            "permit_holder",
+            "permit_issuer",
+            "permit_verifier",
+            "system_administrator"
+          ],
+          "create_new_revision": false
+        },
+        {
+          "code": "mark_as_expired",
+          "name": "Mark as Expired",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "expired",
+          "ignore_tasks": true,
+          "linked_approval": null,
+          "allowed_job_roles": [
+            "permit_verifier",
+            "permit_issuer",
+            "system_administrator"
+          ],
+          "create_new_revision": false
+        }
+      ],
+      "is_open_state": true,
+      "primary_action": "reissue",
+      "primary_next_state": "planning_approved"
+    },
+    {
+      "code": "surrendered",
+      "name": "Surrendered",
+      "color": "#73D13D",
+      "actions": [
+        {
+          "code": "close",
+          "name": "Close",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "closed",
+          "ignore_tasks": false,
+          "linked_approval": "issuer_acceptance_back",
+          "allowed_job_roles": ["permit_issuer", "system_administrator"],
+          "create_new_revision": false
+        },
+        {
+          "code": "cancel",
+          "name": "Cancel",
+          "platforms": ["web", "mobile"],
+          "blocked_by": [],
+          "next_state": "cancelled",
+          "ignore_tasks": false,
+          "linked_approval": "permit_cancellation",
+          "allowed_job_roles": ["permit_issuer", "system_administrator"],
+          "create_new_revision": false
+        }
+      ],
+      "is_open_state": true,
+      "primary_action": "close",
+      "primary_next_state": "closed"
+    },
+    {
+      "code": "closed",
+      "name": "Closed",
+      "color": "#389E0D",
+      "actions": [],
+      "is_open_state": false,
+      "primary_action": null,
+      "primary_next_state": null
+    },
+    {
+      "code": "cancelled",
+      "name": "Cancelled",
+      "color": "#FF4D4F",
+      "actions": [],
+      "is_open_state": false,
+      "primary_action": null,
+      "primary_next_state": null
+    },
+    {
+      "code": "expired",
+      "name": "Expired",
+      "color": "#8C8C8C",
+      "actions": [],
+      "is_open_state": false,
+      "primary_action": null,
+      "primary_next_state": null
+    }
+  ]
+}
