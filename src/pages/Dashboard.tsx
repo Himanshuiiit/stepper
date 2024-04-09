@@ -1,13 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import { useGlobalContext } from "../utils/context";
+// import { useNavigate } from "react-router-dom";
+// import { useGlobalContext } from "../utils/context";
+import Flow from "../components/Flow/Flow";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const { tasks } = useGlobalContext();
+  // const navigate = useNavigate();
+  // const { tasks } = useGlobalContext();
   return (
     <div className="p-8">
       <h1 className="text-3xl pb-4 font-bold">Dashboard</h1>
-      <div className="w-full border border-gray-400 text-white bg-gray-400 text-lg font-bold flex justify-between px-8 pr-14 py-4">
+      {/* <div className="w-full border border-gray-400 text-white bg-gray-400 text-lg font-bold flex justify-between px-8 pr-14 py-4">
         <div>Name</div>
         <div>Status</div>
       </div>
@@ -26,7 +27,8 @@ const Dashboard = () => {
             </div>
           </div>
         );
-      })}
+      })} */}
+      <Flow />
     </div>
   );
 };
